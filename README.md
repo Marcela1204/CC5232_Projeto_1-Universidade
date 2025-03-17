@@ -1,7 +1,7 @@
 <div align="center">
   
 # UNIVERSIDADE
-## PROEJTO 1 DE BANCO DE DADOS
+## PROJETO 1 DE BANCO DE DADOS
 
 </div>
 <br>
