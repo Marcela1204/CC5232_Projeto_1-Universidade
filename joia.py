@@ -77,20 +77,20 @@ def gerar_dados_ficticios(num_alunos, num_professores):
 def inserir_no_supabase(dados):
     # Inserir alunos
     for aluno in dados["alunos"]:
-        supabase.table('alunos').insert(aluno).execute()
+        supabase.table('teste_codigo.alunos').insert(aluno).execute()
 
     # Inserir TCCs
     for tcc in dados["tccs"]:
-        supabase.table('tccs').insert(tcc).execute()
+        supabase.table('teste_codigo.tccs').insert(tcc).execute()
 
     # Inserir históricos escolares
     for historico in dados["historicos_escolares"]:
         for disciplina in historico:
-            supabase.table('historico_escolar').insert(disciplina).execute()
+            supabase.table('teste_codigo.historico_escolar').insert(disciplina).execute()
 
     # Inserir professores
     for professor in dados["professores"]:
-        supabase.table('professores').insert({"nome": professor}).execute()
+        supabase.table('teste_codigo.professores').insert({"nome": professor}).execute()
 
 # Gerando dados fictícios de 5 alunos e 3 professores
 dados_ficticios = gerar_dados_ficticios(15, 5)
