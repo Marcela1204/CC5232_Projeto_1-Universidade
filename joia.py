@@ -18,6 +18,16 @@ disciplinas = {
     "Biomedicina": ["Genética", "Biotecnologia", "Microbiologia", "Imunologia", "Bioinformática"]
 }
 
+departamentos = {
+    "Ciência da Computação": "DCOMP",
+    "Engenharia Elétrica": "DEEL",
+    "Medicina": "DMED",
+    "Administração": "DADM",
+    "Direito": "DDIR",
+    "Psicologia": "DPSI",
+    "Biomedicina": "DBIO"
+}
+
 # Inicializar o cliente do Supabase
 supabase: Client = create_client(url, key)
 
