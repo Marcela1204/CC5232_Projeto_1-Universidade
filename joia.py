@@ -4,14 +4,14 @@ from supabase import create_client, Client
 
 # Credenciais do Supabase
 url = "https://nlfoyszzrcnadtcqhuin.supabase.co"  # Substitua com a URL do seu projeto
-key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5sZm95c3p6cmNuYWR0Y3FodWluIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIxNzA3NjksImV4cCI6MjA1Nzc0Njc2OX0.vHr-8QqMGwqCrVGfrX6arCUC9g_PcbfpIEE27EdhkI4"  # Substitua com a chave da API
+key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5sZm95c3p6cmNuYWR0Y3FodWluIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MzExNTI1OCwiZXhwIjoyMDU4NjkxMjU4fQ.zAvSDeoZ3INAhUwSumGUCly-RTquuaYEPiPcuR4GEP4"  # api key secret
 
 
 cursos = ["Ciência da Computação", "Engenharia Elétrica", "Medicina", "Administração", "Direito", "Psicologia", "Biomedicina"]
 disciplinas = {
     "Ciência da Computação": ["Algoritmos", "Estruturas de Dados", "Redes de Computadores", "Banco de Dados", "Inteligência Artificial"],
-    "Engenharia Elétrica": ["Circuitos Elétricos", "Sistemas Digitais", "Eletromagnetismo", "Teoria de Controle", "Máquinas Elétricas"],
-    "Medicina": ["Anatomia", "Fisiologia", "Bioquímica", "Microbiologia", "Farmacologia"],
+    "Engenharia Elétrica": ["Circuitos Elétricos", "Sistemas Digitais", "Eletromagnetismo", "Teoria de Controle", "Máquinas Elétricas","Algoritmos"],
+    "Medicina": ["Anatomia", "Fisiologia", "Bioquímica", "Microbiologia", "Farmacologia","Genética"],
     "Administração": ["Gestão de Pessoas", "Marketing", "Contabilidade", "Economia", "Administração Estratégica"],
     "Direito": ["Direito Penal", "Direito Constitucional", "Direito Civil", "Direito Empresarial", "Direito Tributário"],
     "Psicologia": ["Psicologia Geral", "Psicologia do Desenvolvimento", "Psicologia Clínica", "Psicologia Organizacional", "Psicologia Educacional"],
@@ -75,22 +75,36 @@ def gerar_dados_ficticios(num_alunos, num_professores):
 
 # Inserir os dados no Supabase
 def inserir_no_supabase(dados):
-    # Inserir alunos
-    for aluno in dados["alunos"]:
-        supabase.table('teste_codigo.alunos').insert(aluno).execute()
+    try:
+        # Inserir alunos
+        for aluno in dados["alunos"]:
+            response = supabase.table('alunos').insert(aluno).execute()
+            #print("Aluno inserido com sucesso:", response)
 
-    # Inserir TCCs
-    for tcc in dados["tccs"]:
-        supabase.table('teste_codigo.tccs').insert(tcc).execute()
+        # Inserir TCCs
+        for tcc in dados["tccs"]:
+            response = supabase.table('tccs').insert(tcc).execute()
+            #print("TCC inserido com sucesso:", response)
 
-    # Inserir históricos escolares
-    for historico in dados["historicos_escolares"]:
-        for disciplina in historico:
-            supabase.table('teste_codigo.historico_escolar').insert(disciplina).execute()
+        # Inserir históricos escolares
+        for historico in dados["historicos_escolares"]:
+            for disciplina in historico:
+                response = supabase.table('historico_escolar').insert(disciplina).execute()
+                #print("Histórico inserido com sucesso:", response)
 
-    # Inserir professores
-    for professor in dados["professores"]:
-        supabase.table('teste_codigo.professores').insert({"nome": professor}).execute()
+        # Inserir professores
+        for professor in dados["professores"]:
+            response = supabase.table('professores').insert({"nome": professor}).execute()
+            #print("Professor inserido com sucesso:", response)
+
+        for curso in cursos:
+            for disciplina in disciplinas[curso]:
+                response = supabase.table('disciplinas_lecionadas').insert({"disciplina": disciplina, "curso": curso}).execute()
+                #print("curso inserido com sucesso:", response)
+            
+
+    except Exception as e:
+        print(e)
 
 # Gerando dados fictícios de 5 alunos e 3 professores
 dados_ficticios = gerar_dados_ficticios(15, 5)
