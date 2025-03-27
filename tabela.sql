@@ -1,121 +1,58 @@
-CREATE TABLE IF NOT EXISTS alunos (
-            id SERIAL PRIMARY KEY,
-            nome VARCHAR(255) NOT NULL,
-            ra VARCHAR(20) UNIQUE NOT NULL,
-            curso_id INT REFERENCES cursos(id),
-            semestre_atual INT CHECK (semestre_atual BETWEEN 1 AND 10)
-        );
-        """,
-        """
-        CREATE TABLE IF NOT EXISTS professores (
-            id SERIAL PRIMARY KEY,
-            nome VARCHAR(255) NOT NULL,
-            departamento_id INT REFERENCES departamentos(id)
-        );
-        """,
-        """
-        CREATE TABLE IF NOT EXISTS departamentos (
-            id SERIAL PRIMARY KEY,
-            nome VARCHAR(255) UNIQUE NOT NULL,
-            chefe_id INT REFERENCES professores(id)
-        );
-        """,
-        """
-        CREATE TABLE IF NOT EXISTS cursos (
-            id SERIAL PRIMARY KEY,
-            nome VARCHAR(255) UNIQUE NOT NULL,
-            departamento_id INT REFERENCES departamentos(id),
-            coordenador_id INT REFERENCES professores(id)
-        );
-        """,
-        """
-        CREATE TABLE IF NOT EXISTS disciplinas (
-            id SERIAL PRIMARY KEY,
-            nome VARCHAR(255) UNIQUE NOT NULL,
-            codigo VARCHAR(20) UNIQUE NOT NULL,
-            curso_id INT REFERENCES cursos(id)
-        );
-        """,
-        """
-        CREATE TABLE IF NOT EXISTS historico_escolar (
-            id SERIAL PRIMARY KEY,
-            aluno_id INT REFERENCES alunos(id),
-            disciplina_id INT REFERENCES disciplinas(id),
-            professor_id INT REFERENCES professores(id),
-            semestre INT,
-            ano INT,
-            nota NUMERIC(4,2),
-            status VARCHAR(10) CHECK (status IN ('Aprovado', 'Reprovado'))
-        );
-        """,
-        """
-        CREATE TABLE IF NOT EXISTS historico_lecionadas (
-            id SERIAL PRIMARY KEY,
-            professor_id INT REFERENCES professores(id),
-            disciplina_id INT REFERENCES disciplinas(id),
-            semestre INT,
-            ano INT
-        );
-        """,
-        """
-        CREATE TABLE IF NOT EXISTS tccs (
-            id SERIAL PRIMARY KEY,
-            aluno_id INT REFERENCES alunos(id),
-            professor_id INT REFERENCES professores(id),
-            titulo VARCHAR(255) NOT NULL,
-            data_apresentacao DATE NOT NULL
+CREATE SCHEMA IF NOT EXISTS public;
+SET search_path TO public;
 
-
----------------------------------------------------------------------
-
-CREATE TABLE departamentos (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255) UNIQUE NOT NULL
+-- Tabela de Alunos
+create table alunos (
+    id serial primary key,
+    nome text,
+    idade int,
+    ra text unique,
+    curso text,
+    semestre int
 );
 
-CREATE TABLE professores (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    departamento_id INT REFERENCES departamentos(id)
+-- Tabela de Professores
+create table professores (
+    id serial primary key,
+    nome text,
+    id_departamento text
 );
 
-CREATE TABLE cursos (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255) UNIQUE NOT NULL,
-    departamento_id INT REFERENCES departamentos(id),
-    coordenador_id INT REFERENCES professores(id)
+-- Tabela de TCCs
+create table tccs (
+    id serial primary key,
+    aluno_nome text,
+    titulo text,
+    orientador text,
+    data_apresentacao date
 );
 
-CREATE TABLE alunos (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    ra VARCHAR(50) UNIQUE NOT NULL,
-    curso_id INT REFERENCES cursos(id),
-    semestre_atual INT NOT NULL
+-- Tabela de Histórico Escolar
+create table historico_escolar (
+    id serial primary key,
+    ra text,
+    disciplina text,
+    nota float,
+    ano int,
+    semestre int
 );
 
-CREATE TABLE disciplinas (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    codigo VARCHAR(50) UNIQUE NOT NULL,
-    curso_id INT REFERENCES cursos(id)
+-- Tabela de Disciplinas Lecionadas por Professores
+create table disciplinas_lecionadas (
+    id serial primary key,
+    professor_nome text,
+    disciplina text,
+    curso text,
+    ano_inicio int,
+    semestre_inicio int,
+    coordenador text
 );
 
-CREATE TABLE historico_escolar (
-    id SERIAL PRIMARY KEY,
-    aluno_id INT REFERENCES alunos(id),
-    disciplina_id INT REFERENCES disciplinas(id),
-    professor_id INT REFERENCES professores(id),
-    semestre INT NOT NULL,
-    ano INT NOT NULL,
-    nota NUMERIC(4,2) NOT NULL,
-    status VARCHAR(20) NOT NULL
-);
-
-CREATE TABLE tccs (
-    id SERIAL PRIMARY KEY,
-    aluno_id INT REFERENCES alunos(id),
-    professor_id INT REFERENCES professores(id),
-    titulo TEXT NOT NULL,
-    data_apresentacao DATE NOT NULL
+create table departamentos (
+    id serial primary key,
+    chefe_departamento text,
+    nome text,
+    id_departamento text,
+    disciplina text,
+    coordenador text
 );
