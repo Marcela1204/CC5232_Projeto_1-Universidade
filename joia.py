@@ -4,7 +4,7 @@ from supabase import create_client, Client
 
 # Credenciais do Supabase
 url = "https://nlfoyszzrcnadtcqhuin.supabase.co"  # Substitua com a URL do seu projeto
-key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5sZm95c3p6cmNuYWR0Y3FodWluIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MjE3MDc2OSwiZXhwIjoyMDU3NzQ2NzY5fQ.6T2EtJnE6hz-n7ZJDs59bCZXoxDZ-Pjk_j-JC7DnL0o"  # Substitua com a chave da API
+key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5sZm95c3p6cmNuYWR0Y3FodWluIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIxNzA3NjksImV4cCI6MjA1Nzc0Njc2OX0.vHr-8QqMGwqCrVGfrX6arCUC9g_PcbfpIEE27EdhkI4"  # Substitua com a chave da API
 
 
 cursos = ["Ciência da Computação", "Engenharia Elétrica", "Medicina", "Administração", "Direito", "Psicologia", "Biomedicina"]
