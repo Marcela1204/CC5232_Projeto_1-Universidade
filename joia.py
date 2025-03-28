@@ -54,9 +54,11 @@ def gerar_dados_ficticios(num_alunos, num_professores):
     dados = {
         "alunos": [],
         "professores": [],
+        "professor_da_materia" : [],
         "tccs": [],
         "historicos_escolares": [],
     }
+    usados = []
 
     # Gerando dados de alunos
     for _ in range(num_alunos):
@@ -80,6 +82,15 @@ def gerar_dados_ficticios(num_alunos, num_professores):
     for professor in professores:
         dados["professores"].append(professor)
         #print(dados)
+        ok = 0
+        while ok == 0:
+            adicionar = random.randint(0,len(cursos)-1)
+            if cursos[adicionar] not in usados:
+                dados["professor_da_materia"].append({
+                professor : disciplinas[cursos[adicionar]]
+                })
+                usados.append(cursos[adicionar])
+                ok = 1
 
     return dados
 
@@ -121,5 +132,4 @@ dados_ficticios = gerar_dados_ficticios(15, 5)
 
 # Inserir no Supabase
 inserir_no_supabase(dados_ficticios)
-
 print("Dados inseridos com sucesso no Supabase!")
