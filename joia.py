@@ -10,8 +10,8 @@ key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5s
 cursos = ["Ciência da Computação", "Engenharia Elétrica", "Medicina", "Administração", "Direito", "Psicologia", "Biomedicina"]
 disciplinas = {
     "Ciência da Computação": ["Algoritmos", "Estruturas de Dados", "Redes de Computadores", "Banco de Dados", "Inteligência Artificial"],
-    "Engenharia Elétrica": ["Circuitos Elétricos", "Sistemas Digitais", "Eletromagnetismo", "Teoria de Controle", "Máquinas Elétricas","Algoritmos"],
-    "Medicina": ["Anatomia", "Fisiologia", "Bioquímica", "Microbiologia", "Farmacologia","Genética"],
+    "Engenharia Elétrica": ["Circuitos Elétricos", "Sistemas Digitais", "Eletromagnetismo", "Teoria de Controle", "Máquinas Elétricas"],
+    "Medicina": ["Anatomia", "Fisiologia", "Bioquímica", "Farmacologia"],
     "Administração": ["Gestão de Pessoas", "Marketing", "Contabilidade", "Economia", "Administração Estratégica"],
     "Direito": ["Direito Penal", "Direito Constitucional", "Direito Civil", "Direito Empresarial", "Direito Tributário"],
     "Psicologia": ["Psicologia Geral", "Psicologia do Desenvolvimento", "Psicologia Clínica", "Psicologia Organizacional", "Psicologia Educacional"],
@@ -20,6 +20,7 @@ disciplinas = {
 numero_disciplinas = 0
 for curso, disciplina in disciplinas.items():
     numero_disciplinas += len(disciplina)
+    #ideia sobre lista grande com todas as disciplinas, onde conforme a disciplina é adicionada para os professores ela é removida desta lista até que ela esteja vazia
 
 departamentos = {
     "Ciência da Computação": "DCOMP",
@@ -90,6 +91,7 @@ def gerar_dados_ficticios(num_alunos, num_professores):
         #print(dados)
         ok = 0
         while ok == 0:
+            #print(len(cursos))
             adicionar = random.randint(0,len(cursos)-1)
             novo = random.randint(0,len(disciplinas[cursos[adicionar]])-1)
             if disciplinas[cursos[adicionar]][novo] not in usados:
@@ -100,7 +102,7 @@ def gerar_dados_ficticios(num_alunos, num_professores):
                 usados.append(disciplinas[cursos[adicionar]][novo])
                 ok = 1
 
-    print(dados["professor_da_materia"])
+    #print(dados["professor_da_materia"])
 
     return dados
 
@@ -138,7 +140,9 @@ def inserir_no_supabase(dados):
         print(e)
 
 # Gerando dados fictícios de 5 alunos e 3 professores
-dados_ficticios = gerar_dados_ficticios(15, 37)
+#for i in range(0,36):
+dados_ficticios = gerar_dados_ficticios(15, 32)
+    #print("Gerando dados fictícios para {0} professores".format(i))
 
 # Inserir no Supabase
 #inserir_no_supabase(dados_ficticios)
