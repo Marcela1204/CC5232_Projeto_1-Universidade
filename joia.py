@@ -64,7 +64,7 @@ def gerar_dados_ficticios(num_alunos, num_professores):
     dados = {
         "alunos": [],
         "professores": [],
-        "professor_da_materia" : [],
+        "professor_da_materia" : {},
         "tccs": [],
         "historicos_escolares": [],
     }
@@ -98,14 +98,15 @@ def gerar_dados_ficticios(num_alunos, num_professores):
             adicionar = random.randint(0,len(materias)-1)
             #novo = random.randint(0,len(disciplinas[cursos[adicionar]])-1)
             if len(materias) > 0:
-                dados["professor_da_materia"].append({
-                professor : materias[adicionar]
-                })
+                #dados["professor_da_materia"].append({
+                #professor : materias[adicionar]
+                #})
+                dados["professor_da_materia"][materias[adicionar]] = professor
                 #usados.append(materias[adicionar])
                 materias.pop(adicionar)
                 ok = 1
 
-    print(dados["professor_da_materia"])
+    #print(dados["professor_da_materia"])
 
     return dados
 
@@ -135,19 +136,19 @@ def inserir_no_supabase(dados):
 
         for curso in cursos:
             for disciplina in disciplinas[curso]:
-                response = supabase.table('disciplinas_lecionadas').insert({"disciplina": disciplina, "curso": curso}).execute()
+                response = supabase.table('disciplinas_lecionadas').insert({"disciplina": disciplina, "curso": curso, "professor_nome": dados["professor_da_materia"][disciplina]}).execute()
                 #print("curso inserido com sucesso:", response)
             
 
     except Exception as e:
         print(e)
 
-# Gerando dados fictícios de 5 alunos e 3 professores
+# Gerando dados fictícios de 15 alunos e 37 professores
 #for i in range(0,36):
 dados_ficticios = gerar_dados_ficticios(15, 37)
     #print("Gerando dados fictícios para {0} professores".format(i))
 
 # Inserir no Supabase
-#inserir_no_supabase(dados_ficticios)
+inserir_no_supabase(dados_ficticios)
 #print(dados_ficticios)
 print("Dados inseridos com sucesso no Supabase!")
