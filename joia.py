@@ -10,16 +10,19 @@ key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5s
 cursos = ["Ciência da Computação", "Engenharia Elétrica", "Medicina", "Administração", "Direito", "Psicologia", "Biomedicina"]
 disciplinas = {
     "Ciência da Computação": ["Algoritmos", "Estruturas de Dados", "Redes de Computadores", "Banco de Dados", "Inteligência Artificial"],
-    "Engenharia Elétrica": ["Circuitos Elétricos", "Sistemas Digitais", "Eletromagnetismo", "Teoria de Controle", "Máquinas Elétricas"],
-    "Medicina": ["Anatomia", "Fisiologia", "Bioquímica", "Farmacologia"],
+    "Engenharia Elétrica": ["Circuitos Elétricos", "Sistemas Digitais", "Eletromagnetismo", "Teoria de Controle", "Máquinas Elétricas","Algoritmos"],
+    "Medicina": ["Anatomia", "Fisiologia", "Bioquímica", "Farmacologia","Microbiologia","Genética"],
     "Administração": ["Gestão de Pessoas", "Marketing", "Contabilidade", "Economia", "Administração Estratégica"],
     "Direito": ["Direito Penal", "Direito Constitucional", "Direito Civil", "Direito Empresarial", "Direito Tributário"],
     "Psicologia": ["Psicologia Geral", "Psicologia do Desenvolvimento", "Psicologia Clínica", "Psicologia Organizacional", "Psicologia Educacional"],
     "Biomedicina": ["Genética", "Biotecnologia", "Microbiologia", "Imunologia", "Bioinformática"]
 }
+materias = []
 numero_disciplinas = 0
 for curso, disciplina in disciplinas.items():
     numero_disciplinas += len(disciplina)
+    for materia in disciplina:
+        materias.append(materia)
     #ideia sobre lista grande com todas as disciplinas, onde conforme a disciplina é adicionada para os professores ela é removida desta lista até que ela esteja vazia
 
 departamentos = {
@@ -55,7 +58,7 @@ def gerar_TCC(aluno_nome):
 
 # Função para gerar dados fictícios de alunos, professores, TCCs e históricos
 def gerar_dados_ficticios(num_alunos, num_professores):
-    if num_professores >= numero_disciplinas:
+    if num_professores > numero_disciplinas:
         print("numero de professores não pode ser maior do que os cursos disponiveis ({0})".format(numero_disciplinas))
         return
     dados = {
@@ -92,17 +95,17 @@ def gerar_dados_ficticios(num_alunos, num_professores):
         ok = 0
         while ok == 0:
             #print(len(cursos))
-            adicionar = random.randint(0,len(cursos)-1)
-            novo = random.randint(0,len(disciplinas[cursos[adicionar]])-1)
-            if disciplinas[cursos[adicionar]][novo] not in usados:
-                
+            adicionar = random.randint(0,len(materias)-1)
+            #novo = random.randint(0,len(disciplinas[cursos[adicionar]])-1)
+            if len(materias) > 0:
                 dados["professor_da_materia"].append({
-                professor : disciplinas[cursos[adicionar]][novo]
+                professor : materias[adicionar]
                 })
-                usados.append(disciplinas[cursos[adicionar]][novo])
+                #usados.append(materias[adicionar])
+                materias.pop(adicionar)
                 ok = 1
 
-    #print(dados["professor_da_materia"])
+    print(dados["professor_da_materia"])
 
     return dados
 
@@ -141,7 +144,7 @@ def inserir_no_supabase(dados):
 
 # Gerando dados fictícios de 5 alunos e 3 professores
 #for i in range(0,36):
-dados_ficticios = gerar_dados_ficticios(15, 32)
+dados_ficticios = gerar_dados_ficticios(15, 37)
     #print("Gerando dados fictícios para {0} professores".format(i))
 
 # Inserir no Supabase
