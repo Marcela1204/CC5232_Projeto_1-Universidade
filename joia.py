@@ -17,6 +17,9 @@ disciplinas = {
     "Psicologia": ["Psicologia Geral", "Psicologia do Desenvolvimento", "Psicologia Clínica", "Psicologia Organizacional", "Psicologia Educacional"],
     "Biomedicina": ["Genética", "Biotecnologia", "Microbiologia", "Imunologia", "Bioinformática"]
 }
+numero_disciplinas = 0
+for curso, disciplina in disciplinas.items():
+    numero_disciplinas += len(disciplina)
 
 departamentos = {
     "Ciência da Computação": "DCOMP",
@@ -51,6 +54,9 @@ def gerar_TCC(aluno_nome):
 
 # Função para gerar dados fictícios de alunos, professores, TCCs e históricos
 def gerar_dados_ficticios(num_alunos, num_professores):
+    if num_professores >= numero_disciplinas:
+        print("numero de professores não pode ser maior do que os cursos disponiveis ({0})".format(numero_disciplinas))
+        return
     dados = {
         "alunos": [],
         "professores": [],
@@ -85,12 +91,16 @@ def gerar_dados_ficticios(num_alunos, num_professores):
         ok = 0
         while ok == 0:
             adicionar = random.randint(0,len(cursos)-1)
-            if cursos[adicionar] not in usados:
+            novo = random.randint(0,len(disciplinas[cursos[adicionar]])-1)
+            if disciplinas[cursos[adicionar]][novo] not in usados:
+                
                 dados["professor_da_materia"].append({
-                professor : disciplinas[cursos[adicionar]]
+                professor : disciplinas[cursos[adicionar]][novo]
                 })
-                usados.append(cursos[adicionar])
+                usados.append(disciplinas[cursos[adicionar]][novo])
                 ok = 1
+
+    print(dados["professor_da_materia"])
 
     return dados
 
@@ -128,8 +138,9 @@ def inserir_no_supabase(dados):
         print(e)
 
 # Gerando dados fictícios de 5 alunos e 3 professores
-dados_ficticios = gerar_dados_ficticios(15, 5)
+dados_ficticios = gerar_dados_ficticios(15, 37)
 
 # Inserir no Supabase
-inserir_no_supabase(dados_ficticios)
+#inserir_no_supabase(dados_ficticios)
+#print(dados_ficticios)
 print("Dados inseridos com sucesso no Supabase!")
