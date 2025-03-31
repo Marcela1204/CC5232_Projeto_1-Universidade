@@ -1,6 +1,7 @@
 import random
 import faker
 from supabase import create_client, Client
+from math import ceil
 
 # Credenciais do Supabase
 url = "https://nlfoyszzrcnadtcqhuin.supabase.co"  # Substitua com a URL do seu projeto
@@ -17,6 +18,43 @@ disciplinas = {
     "Psicologia": ["Psicologia Geral", "Psicologia do Desenvolvimento", "Psicologia Clínica", "Psicologia Organizacional", "Psicologia Educacional"],
     "Biomedicina": ["Genética", "Biotecnologia", "Microbiologia", "Imunologia", "Bioinformática"]
 }
+semestres = {
+    "Algoritmos": 1,
+    "Estruturas de Dados": 2,
+    "Redes de Computadores": 5,
+    "Banco de Dados": 6,
+    "Inteligência Artificial": 8,
+    "Circuitos Elétricos": 1,
+    "Sistemas Digitais": 3,
+    "Eletromagnetismo": 4,
+    "Teoria de Controle": 6,
+    "Máquinas Elétricas": 7,
+    "Anatomia": 1,
+    "Fisiologia": 2,
+    "Bioquímica": 3,
+    "Farmacologia": 5,
+    "Microbiologia": 4,
+    "Genética": 6,
+    "Gestão de Pessoas": 2,
+    "Marketing": 3,
+    "Contabilidade": 4,
+    "Economia": 5,
+    "Administração Estratégica": 7,
+    "Direito Penal": 1,
+    "Direito Constitucional": 2,
+    "Direito Civil": 3,
+    "Direito Empresarial": 4,
+    "Direito Tributário": 5,
+    "Psicologia Geral": 1,
+    "Psicologia do Desenvolvimento": 2,
+    "Psicologia Clínica": 4,
+    "Psicologia Organizacional": 5,
+    "Psicologia Educacional": 6,
+    "Biotecnologia": 3,
+    "Imunologia": 5,
+    "Bioinformática": 7
+}
+
 materias = []
 numero_disciplinas = 0
 for curso, disciplina in disciplinas.items():
@@ -134,9 +172,14 @@ def inserir_no_supabase(dados):
             response = supabase.table('professores').insert({"nome": professor}).execute()
             #print("Professor inserido com sucesso:", response)
 
+        profs = {}
+        jafoi = []
         for curso in cursos:
             for disciplina in disciplinas[curso]:
-                response = supabase.table('disciplinas_lecionadas').insert({"disciplina": disciplina, "curso": curso, "professor_nome": dados["professor_da_materia"][disciplina]}).execute()
+                if curso not in jafoi:
+                    profs[curso] = dados["professor_da_materia"][disciplina]
+                    jafoi.append(curso)
+                response = supabase.table('disciplinas_lecionadas').insert({"disciplina": disciplina, "curso": curso, "professor_nome": dados["professor_da_materia"][disciplina], "coordenador" : profs[curso], "semestre_inicio" : semestres[disciplina], "ano_inicio" : ceil(semestres[disciplina]/2)}).execute()
                 #print("curso inserido com sucesso:", response)
             
 
@@ -145,7 +188,7 @@ def inserir_no_supabase(dados):
 
 # Gerando dados fictícios de 15 alunos e 37 professores
 #for i in range(0,36):
-dados_ficticios = gerar_dados_ficticios(15, 37)
+dados_ficticios = gerar_dados_ficticios(15, 36)
     #print("Gerando dados fictícios para {0} professores".format(i))
 
 # Inserir no Supabase
