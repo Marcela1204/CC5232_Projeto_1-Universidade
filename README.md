@@ -21,6 +21,10 @@ Projeto criado por:
 ## Execução do Projeto
 <br>
 
-## MR e MER
+## Diagramas
+
+### MER
+![image](https://github.com/user-attachments/assets/6c515ff0-5609-4ef7-869b-50e25009f397)
+
 <br>
 
