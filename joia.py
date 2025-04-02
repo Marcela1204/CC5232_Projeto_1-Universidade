@@ -105,13 +105,15 @@ def gerar_dados_ficticios(num_alunos, num_professores):
         "professor_da_materia" : {},
         "tccs": [],
         "historicos_escolares": [],
+        "ras" : []
     }
     usados = []
-
+    #ras = []
     # Gerando dados de alunos
     for _ in range(num_alunos):
         nome = fake.name()
         ra = gerar_RA()
+        #ras.append(ra)
         curso = random.choice(cursos)
         semestre = random.randint(1, 10)
         dados["alunos"].append({
@@ -121,6 +123,7 @@ def gerar_dados_ficticios(num_alunos, num_professores):
             "curso": curso,
             "semestre": semestre
         })
+        dados["ras"].append(ra)
         
         # Gerando TCC para cada aluno
         dados["tccs"].append(gerar_TCC(nome))
@@ -181,6 +184,21 @@ def inserir_no_supabase(dados):
                     jafoi.append(curso)
                 response = supabase.table('disciplinas_lecionadas').insert({"disciplina": disciplina, "curso": curso, "professor_nome": dados["professor_da_materia"][disciplina], "coordenador" : profs[curso], "semestre_inicio" : semestres[disciplina], "ano_inicio" : ceil(semestres[disciplina]/2)}).execute()
                 #print("curso inserido com sucesso:", response)
+        
+        for ras in dados["ras"]:
+            read = supabase.table("alunos").select("*").eq("ra", ras).execute()
+            disciplinas_semestre = [disciplina for disciplina, semestre in semestres.items() if semestre <= read.data[0]["semestre"] and disciplina in disciplinas[read.data[0]["curso"]]]
+            #semestre = random.randint(1,10)
+            passou = []
+            for mat in disciplinas_semestre:
+                response = supabase.table('historico_escolar').insert({"ra": ras, "disciplina" : mat, "nota" : random.randrange(4,10), "ano" : ceil(semestres[mat]/2), "semestre" : semestres[mat] }).execute()
+                read2 = supabase.table("historico_escolar").select("*").eq("ra", ras).execute()
+                for i in read2.data:
+                    if i["nota"] < 5 and i["disciplina"] not in passou:
+                        passou.append(i["disciplina"])
+                        response = supabase.table('historico_escolar').insert({"ra": ras, "disciplina" : mat, "nota" : random.randrange(5,10), "ano" : ceil((i["semestre"]+1)/2), "semestre" : i["semestre"]+1}).execute()
+                
+
             
 
     except Exception as e:
@@ -188,7 +206,7 @@ def inserir_no_supabase(dados):
 
 # Gerando dados fictícios de 15 alunos e 37 professores
 #for i in range(0,36):
-dados_ficticios = gerar_dados_ficticios(15, 36)
+dados_ficticios = gerar_dados_ficticios(15, 37)
     #print("Gerando dados fictícios para {0} professores".format(i))
 
 # Inserir no Supabase
