@@ -22,12 +22,12 @@ Projeto criado por:
 
 - **Tabelas** (Mudar a descrição das tabelas)   
 > O banco de dados deverá conter as seguintes informações:   
-1. Alunos: Dados cadastrais, matrícula, histórico escolar.   
-2. Professores: Dados cadastrais, disciplinas lecionadas, TCCs orientados.   
-3. Departamentos: Informações sobre os departamentos acadêmicos.     
-4. Disciplinas Lecionadas: Código, nome, carga horária, professores responsáveis.   
-5. Histórico Escolar: Registro de disciplinas cursadas pelos alunos, notas e aprovações/reprovações.   
-6. TCCs Apresentados: Registro dos trabalhos, incluindo os alunos autores e o professor orientador.
+1. Alunos: RA, Nome, Idade, Curso, Semestre.   
+2. Professores: ID_Professores, Nome, ID_Departamento.   
+3. Departamentos: ID_Departamento, Nome, Curso, Coordenador, Chefe de Departamento.     
+4. Disciplinas Lecionadas: ID_Disciplinas, Nome do Professor, Disciplina, Curso, Ano de Início, Semestre de Início, Coordenador.   
+5. Histórico Escolar: ID_Histórico, RA, Disciplina, Nota, Ano, Semestre.   
+6. TCCs Apresentados: ID_TCCs, Nome do Aluno, Título, Orientador, Data de Apresentação.
 
 - **Queries** (Colocar as outras queries)
 > Para demonstrar o funcionamento do banco, foram usadas as seguintes queries:   
@@ -46,7 +46,7 @@ Passo a passo para exceutar o projeto:
 
 ### Segundo passo: Executar código para criação dos dados
 - Abra o Codespace do github, instale as bibliotecas (terminal) 'faker' e 'supabase' e execute o código em python
-  OBS: Verifique a URL e API Keys do seu banco e substitua no código nas variáveis 'url' e 'key', respectivamente antes de executar o código.
+  OBS: Verifique a URL e API Keys do seu banco e substitua no código nas variáveis 'url' e 'key', respectivamente, antes de executar o código.
 
 ### Terceiro passo: 
 - Com as informações prontas, execute as queries determinadas pelo projeto na aba SQL editor.
