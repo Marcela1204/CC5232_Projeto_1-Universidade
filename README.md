@@ -59,7 +59,7 @@ COLOCAR IMAGENS/VÍDEO PRA MOSTRAR COMO FUNCIONA
 ![image](https://github.com/user-attachments/assets/6c515ff0-5609-4ef7-869b-50e25009f397)
 
 ### MR
-![image](https://github.com/user-attachments/assets/035c740f-21f0-41fa-aa19-28c73b4f79f2)
+![image](https://github.com/user-attachments/assets/f236e9e1-9f17-473a-b6ff-443c21144266)
 
 ***
 
