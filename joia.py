@@ -2,7 +2,9 @@ import random
 import faker
 from supabase import create_client, Client
 from math import ceil
+from time import process_time
 
+inicio = process_time()
 # Credenciais do Supabase
 url = "https://nlfoyszzrcnadtcqhuin.supabase.co"  # Substitua com a URL do seu projeto
 key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5sZm95c3p6cmNuYWR0Y3FodWluIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MzExNTI1OCwiZXhwIjoyMDU4NjkxMjU4fQ.zAvSDeoZ3INAhUwSumGUCly-RTquuaYEPiPcuR4GEP4"  # api key secret
@@ -170,11 +172,6 @@ def inserir_no_supabase(dados):
                 response = supabase.table('historico_escolar').insert(disciplina).execute()
                 #print("Histórico inserido com sucesso:", response)
 
-        # Inserir professores
-        for professor in dados["professores"]:
-            response = supabase.table('professores').insert({"nome": professor}).execute()
-            #print("Professor inserido com sucesso:", response)
-
         profs = {}
         jafoi = []
         for curso in cursos:
@@ -201,6 +198,13 @@ def inserir_no_supabase(dados):
         for curso in cursos:
             leitura = supabase.table("disciplinas_lecionadas").select("*").eq("curso",curso).execute()
             response = supabase.table('departamentos').insert({"nome" : curso,"curso" : curso, "id_departamento" : departamentos[curso], "coordenador" : leitura.data[0]["coordenador"], "chefe_departamento" :leitura.data[1]["professor_nome"]}).execute()
+        # Inserir professores
+        for professor in dados["professores"]:
+            leitura1 = supabase.table("disciplinas_lecionadas").select("curso").eq("professor_nome", professor).execute()
+            leitura2 = supabase.table("departamentos").select("id_departamento").eq("curso", leitura1.data[0]["curso"]).execute()
+            response = supabase.table('professores').insert({"nome": professor,"id_departamento" : leitura2.data[0]["id_departamento"] }).execute()
+            #print("Professor inserido com sucesso:", response)
+
 
 
             
@@ -217,3 +221,5 @@ dados_ficticios = gerar_dados_ficticios(15, 37) #nao colocar valor menor q 37, p
 inserir_no_supabase(dados_ficticios)
 #print(dados_ficticios)
 print("OK!")
+fim = process_time()
+print("Tempo total de execução: {0} segundos".format(fim - inicio))
