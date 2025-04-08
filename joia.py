@@ -3,7 +3,7 @@ import faker
 from supabase import create_client, Client
 from math import ceil
 from time import process_time
-
+print("Gerando dados fictícios para o Supabase...")
 inicio = process_time()
 # Credenciais do Supabase
 url = "https://nlfoyszzrcnadtcqhuin.supabase.co"  # Substitua com a URL do seu projeto
@@ -157,23 +157,27 @@ def gerar_dados_ficticios(num_alunos, num_professores):
 def inserir_no_supabase(dados):
     try:
         # Inserir alunos
+        print("inserindo alunos")
         for aluno in dados["alunos"]:
             response = supabase.table('alunos').insert(aluno).execute()
             #print("Aluno inserido com sucesso:", response)
 
         # Inserir TCCs
+        print("inserindo TCCs")
         for tcc in dados["tccs"]:
             response = supabase.table('tccs').insert(tcc).execute()
             #print("TCC inserido com sucesso:", response)
 
         # Inserir históricos escolares
+        print("inserindo historicos escolares")
         for historico in dados["historicos_escolares"]:
             for disciplina in historico:
                 response = supabase.table('historico_escolar').insert(disciplina).execute()
                 #print("Histórico inserido com sucesso:", response)
-
+        conta = 1
         profs = {}
         jafoi = []
+        print("inserindo disciplinas lecionadas")
         for curso in cursos:
             for disciplina in disciplinas[curso]:
                 if curso not in jafoi:
@@ -193,17 +197,23 @@ def inserir_no_supabase(dados):
                 for i in read2.data:
                     if i["nota"] < 5 and i["disciplina"] not in passou:
                         passou.append(i["disciplina"])
+                        print("passando alunos reprovados", conta)
                         response = supabase.table('historico_escolar').insert({"ra": ras, "disciplina" : mat, "nota" : random.randrange(5,10), "ano" : ceil((i["semestre"]+1)/2), "semestre" : i["semestre"]+1}).execute()
-        
+                        conta += 1
+        print("inserindo professores")
         for curso in cursos:
             leitura = supabase.table("disciplinas_lecionadas").select("*").eq("curso",curso).execute()
             response = supabase.table('departamentos').insert({"nome" : curso,"curso" : curso, "id_departamento" : departamentos[curso], "coordenador" : leitura.data[0]["coordenador"], "chefe_departamento" :leitura.data[1]["professor_nome"]}).execute()
         # Inserir professores
-        for professor in dados["professores"]:
-            leitura1 = supabase.table("disciplinas_lecionadas").select("curso").eq("professor_nome", professor).execute()
+        leitura = supabase.table("disciplinas_lecionadas").select("professor_nome").execute()
+        conta = 1
+        for professor in leitura.data:
+            print("professor", professor["professor_nome"], conta)
+            leitura1 = supabase.table("disciplinas_lecionadas").select("curso").eq("professor_nome", professor["professor_nome"]).execute()
             leitura2 = supabase.table("departamentos").select("id_departamento").eq("curso", leitura1.data[0]["curso"]).execute()
-            response = supabase.table('professores').insert({"nome": professor,"id_departamento" : leitura2.data[0]["id_departamento"] }).execute()
+            response = supabase.table('professores').insert({"nome": professor["professor_nome"],"id_departamento" : leitura2.data[0]["id_departamento"] }).execute()
             #print("Professor inserido com sucesso:", response)
+            conta += 1
 
 
 
@@ -220,6 +230,6 @@ dados_ficticios = gerar_dados_ficticios(15, 37) #nao colocar valor menor q 37, p
 # Inserir no Supabase
 inserir_no_supabase(dados_ficticios)
 #print(dados_ficticios)
-print("OK!")
+print("Concluido")
 fim = process_time()
-print("Tempo total de execução: {0} segundos".format(fim - inicio))
+print("Tempo total de execução: {0} segundos".format((fim - inicio)*100))
