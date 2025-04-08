@@ -197,7 +197,11 @@ def inserir_no_supabase(dados):
                     if i["nota"] < 5 and i["disciplina"] not in passou:
                         passou.append(i["disciplina"])
                         response = supabase.table('historico_escolar').insert({"ra": ras, "disciplina" : mat, "nota" : random.randrange(5,10), "ano" : ceil((i["semestre"]+1)/2), "semestre" : i["semestre"]+1}).execute()
-                
+        
+        for curso in cursos:
+            leitura = supabase.table("disciplinas_lecionadas").select("*").eq("curso",curso).execute()
+            response = supabase.table('departamentos').insert({"nome" : curso,"curso" : curso, "id_departamento" : departamentos[curso], "coordenador" : leitura.data[0]["coordenador"], "chefe_departamento" :leitura.data[1]["professor_nome"]}).execute()
+
 
             
 
