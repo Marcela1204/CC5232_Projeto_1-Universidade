@@ -36,7 +36,16 @@ Projeto criado por:
 3. Mostre a matriz curicular de pelo menos 2 cursos diferentes que possuem disciplinas em comum (e.g., Ciência da Computação e Ciência de Dados). Este exercício deve ser dividido em 2 queries sendo uma para cada curso;    
 4. Para um determinado aluno, mostre os códigos e nomes das diciplinas já cursadas junto com os nomes dos professores que lecionaram a disciplina para o aluno;    
 5. Liste todos os chefes de departamento e coordenadores de curso em apenas uma query de forma que a primeira coluna seja o nome do professor, a segunda o nome do departamento coordena e a terceira o nome do curso que coordena. Substitua os campos em branco do resultado da query pelo texto "nenhum"
-6. (Tem outras 10 queries pra colocar)
+6. Encontre os nomes de todos os estudantes.
+7. Liste os IDs e nomes de todos os professores.
+8. Encontre os nomes de todos os estudantes que cursaram "Banco de Dados" (course_id = 'CS-101').
+9. Encontre os estudantes que cursaram "Ciência da Computação" ou "Engenharia Elétrica".
+10. Encontre os estudantes que cursaram "Sistemas de Banco de Dados" mas não "Inteligência Artificial".
+11. Recupere os nomes dos estudantes que cursaram disciplinas do departamento de "Matemática".
+12. Recupere os IDs dos estudantes que não estão matriculados em nenhum curso do departamento de "Ciência da Computação".
+13. Liste os cursos que foram ministrados pelos professores 'I001' e 'I002'.
+14. Liste os cursos que são ministrados pelo professor 'I001', juntamente com os títulos dos cursos.
+15. Liste os nomes dos estudantes que não cursaram nenhum curso no departamento de "Engenharia".
 
 ## Execução do Projeto
 Passo a passo para exceutar o projeto: 
@@ -51,7 +60,7 @@ Passo a passo para exceutar o projeto:
 ### Terceiro passo: 
 - Com as informações prontas, execute as queries determinadas pelo projeto na aba SQL editor.
 
-COLOCAR IMAGENS/VÍDEO PRA MOSTRAR COMO FUNCIONA
+COLOCAR UM VÍDEO
 
 ## Diagramas
 
