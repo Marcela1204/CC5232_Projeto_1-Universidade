@@ -206,10 +206,10 @@ def inserir_no_supabase(dados):
 
 # Gerando dados fictícios de 15 alunos e 37 professores
 #for i in range(0,36):
-dados_ficticios = gerar_dados_ficticios(15, 37)
+dados_ficticios = gerar_dados_ficticios(15, 37) #nao colocar valor menor q 37, preguiça de arrumar
     #print("Gerando dados fictícios para {0} professores".format(i))
 
 # Inserir no Supabase
 inserir_no_supabase(dados_ficticios)
 #print(dados_ficticios)
-print("Dados inseridos com sucesso no Supabase!")
+print("OK!")
