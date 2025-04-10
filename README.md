@@ -68,7 +68,8 @@ COLOCAR UM VÍDEO
 ![image](https://github.com/user-attachments/assets/6c515ff0-5609-4ef7-869b-50e25009f397)
 
 ### MR
-![image](https://github.com/user-attachments/assets/f236e9e1-9f17-473a-b6ff-443c21144266)
+![image](https://github.com/user-attachments/assets/23a9dbc7-32d6-462f-bf27-2d6bcb3ad3ed)
+
 
 ***
 
