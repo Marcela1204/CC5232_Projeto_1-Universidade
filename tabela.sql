@@ -2,57 +2,82 @@ CREATE SCHEMA IF NOT EXISTS public;
 SET search_path TO public;
 
 -- Tabela de Alunos
-create table alunos (
-    id serial primary key,
-    nome text,
-    idade int,
-    ra text unique,
-    curso text,
-    semestre int
+CREATE TABLE alunos (
+    ra TEXT PRIMARY KEY,
+    nome TEXT,
+    idade INT,
+    curso TEXT,
+    semestre INT
 );
 
 -- Tabela de Professores
-create table professores (
-    id serial primary key,
-    nome text,
-    id_departamento text
-);
-
--- Tabela de TCCs
-create table tccs (
-    id serial primary key,
-    aluno_nome text,
-    titulo text,
-    orientador text,
-    data_apresentacao date
-);
-
--- Tabela de Histórico Escolar
-create table historico_escolar (
-    id serial primary key,
-    ra text,
-    disciplina text,
-    nota float,
-    ano int,
-    semestre int
+CREATE TABLE professores (
+    id_professores SERIAL PRIMARY KEY,
+    nome TEXT,
+    id_departamento TEXT  -- será vinculada depois
 );
 
 -- Tabela de Disciplinas Lecionadas por Professores
-create table disciplinas_lecionadas (
-    id serial primary key,
-    professor_nome text,
-    disciplina text,
-    curso text,
-    ano_inicio int,
-    semestre_inicio int,
-    coordenador text
+CREATE TABLE disciplinas_lecionadas (
+    id_disciplinas SERIAL PRIMARY KEY,
+    nome_professor TEXT,
+    disciplina TEXT,
+    curso TEXT,
+    ano_inicio INT,
+    semestre_inicio INT,
+    coordenador TEXT,
+    id_departamento TEXT,
+    ra TEXT,
+    id_professores INT
 );
 
-create table departamentos (
-    id serial primary key,
-    chefe_departamento text,
-    nome text,
-    id_departamento text,
-    disciplina text,
-    coordenador text
+-- Tabela de Departamentos (sem FK no início)
+CREATE TABLE departamentos (
+    id_departamento TEXT PRIMARY KEY,
+    chefe_departamento TEXT,
+    curso TEXT,
+    coordenador TEXT,
+    id_professores INT,
+    id_disciplinas INT
 );
+
+-- Tabela de TCCs
+CREATE TABLE tccs (
+    id_tccs SERIAL PRIMARY KEY,
+    nome_aluno TEXT,
+    titulo TEXT,
+    orientador TEXT,
+    data_apresentacao DATE,
+    ra TEXT,
+    FOREIGN KEY (ra) REFERENCES alunos(ra)
+);
+
+-- Tabela de Histórico Escolar
+CREATE TABLE historico_escolar (
+    id_historico SERIAL PRIMARY KEY,
+    disciplina TEXT,
+    nota FLOAT,
+    ano INT,
+    semestre INT,
+    ra TEXT,
+    FOREIGN KEY (ra) REFERENCES alunos(ra)
+);
+
+-- Adicionando agora as Foreign Keys que causavam problemas
+ALTER TABLE professores
+    ADD CONSTRAINT fk_professores_departamento
+    FOREIGN KEY (id_departamento) REFERENCES departamentos(id_departamento);
+
+ALTER TABLE disciplinas_lecionadas
+    ADD CONSTRAINT fk_disciplinas_departamento
+    FOREIGN KEY (id_departamento) REFERENCES departamentos(id_departamento),
+    ADD CONSTRAINT fk_disciplinas_ra
+    FOREIGN KEY (ra) REFERENCES alunos(ra),
+    ADD CONSTRAINT fk_disciplinas_professores
+    FOREIGN KEY (id_professores) REFERENCES professores(id_professores);
+
+ALTER TABLE departamentos
+    ADD CONSTRAINT fk_departamentos_professores
+    FOREIGN KEY (id_professores) REFERENCES professores(id_professores),
+    ADD CONSTRAINT fk_departamentos_disciplinas
+    FOREIGN KEY (id_disciplinas) REFERENCES disciplinas_lecionadas(id_disciplinas);
