@@ -86,11 +86,11 @@ def gerar_RA():
     return "RA" + str(random.randint(1000000, 9999999))
 
 # Função para gerar dados de TCCs com a data formatada corretamente
-def gerar_TCC(aluno_nome):
+def gerar_TCC(nome_aluno):
     titulos = ["Análise de Algoritmos", "Estudo sobre Redes Neurais", "Impacto Ambiental de Máquinas Elétricas", "Efeitos Psicológicos na Educação", "Análise de Casos Jurídicos no Brasil"]
     tcc_data = fake.date_this_decade()  # Gera uma data
     return {
-        "aluno_nome": aluno_nome,
+        "nome_aluno": nome_aluno,
         "titulo": random.choice(titulos),
         "orientador": fake.name(),
         "data_apresentacao": tcc_data.isoformat()  # Converte para o formato YYYY-MM-DD
@@ -183,10 +183,11 @@ def inserir_no_supabase(dados):
                 if curso not in jafoi:
                     profs[curso] = dados["professor_da_materia"][disciplina]
                     jafoi.append(curso)
-                response = supabase.table('disciplinas_lecionadas').insert({"disciplina": disciplina, "curso": curso, "professor_nome": dados["professor_da_materia"][disciplina], "coordenador" : profs[curso], "semestre_inicio" : semestres[disciplina], "ano_inicio" : ceil(semestres[disciplina]/2)}).execute()
+                response = supabase.table('disciplinas_lecionadas').insert({"disciplina": disciplina, "curso": curso, "nome_professor": dados["professor_da_materia"][disciplina], "coordenador" : profs[curso], "semestre_inicio" : semestres[disciplina], "ano_inicio" : ceil(semestres[disciplina]/2)}).execute()
                 #print("curso inserido com sucesso:", response)
         
         for ras in dados["ras"]:
+            escreve = supabase.table('tccs').update({"ra" : ras}).eq("nome_aluno", dados["alunos"][0]["nome"]).execute()
             read = supabase.table("alunos").select("*").eq("ra", ras).execute()
             disciplinas_semestre = [disciplina for disciplina, semestre in semestres.items() if semestre <= read.data[0]["semestre"] and disciplina in disciplinas[read.data[0]["curso"]]]
             #semestre = random.randint(1,10)
@@ -203,15 +204,16 @@ def inserir_no_supabase(dados):
         print("inserindo professores")
         for curso in cursos:
             leitura = supabase.table("disciplinas_lecionadas").select("*").eq("curso",curso).execute()
-            response = supabase.table('departamentos').insert({"nome" : curso,"curso" : curso, "id_departamento" : departamentos[curso], "coordenador" : leitura.data[0]["coordenador"], "chefe_departamento" :leitura.data[1]["professor_nome"]}).execute()
+            response = supabase.table('departamentos').insert({"curso" : curso, "id_departamento" : departamentos[curso], "coordenador" : leitura.data[0]["coordenador"], "chefe_departamento" :leitura.data[1]["nome_professor"]}).execute()
+            response = supabase.table('disciplinas_lecionadas').update({"id_departamento" : departamentos[curso]}).eq("curso", curso).execute()
         # Inserir professores
-        leitura = supabase.table("disciplinas_lecionadas").select("professor_nome").execute()
+        leitura = supabase.table("disciplinas_lecionadas").select("nome_professor").execute()
         conta = 1
         for professor in leitura.data:
-            print("professor", professor["professor_nome"], conta)
-            leitura1 = supabase.table("disciplinas_lecionadas").select("curso").eq("professor_nome", professor["professor_nome"]).execute()
+            print("professor", professor["nome_professor"], conta)
+            leitura1 = supabase.table("disciplinas_lecionadas").select("curso").eq("nome_professor", professor["nome_professor"]).execute()
             leitura2 = supabase.table("departamentos").select("id_departamento").eq("curso", leitura1.data[0]["curso"]).execute()
-            response = supabase.table('professores').insert({"nome": professor["professor_nome"],"id_departamento" : leitura2.data[0]["id_departamento"] }).execute()
+            response = supabase.table('professores').insert({"nome": professor["nome_professor"],"id_departamento" : leitura2.data[0]["id_departamento"] }).execute()
             #print("Professor inserido com sucesso:", response)
             conta += 1
 
