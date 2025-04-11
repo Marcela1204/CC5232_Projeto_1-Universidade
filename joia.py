@@ -166,6 +166,9 @@ def inserir_no_supabase(dados):
         print("inserindo TCCs")
         for tcc in dados["tccs"]:
             response = supabase.table('tccs').insert(tcc).execute()
+            read2 = supabase.table("alunos").select("*").eq("nome", tcc["nome_aluno"]).execute()
+            response = supabase.table('tccs').update({"ra" : read2.data[0]["ra"]}).eq("nome_aluno", tcc["nome_aluno"]).execute()
+            #response = supabase.table('tccs').update({"ra" : dados["alunos"][dados["tccs"].index(tcc)]["ra"]}).eq("nome_aluno", tcc["nome_aluno"]).execute()
             #print("TCC inserido com sucesso:", response)
 
         # Inserir históricos escolares
