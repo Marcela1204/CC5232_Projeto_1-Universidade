@@ -223,6 +223,12 @@ def inserir_no_supabase(dados):
 
 
             
+        #readdepartamentos = supabase.table("departamentos").select("*").execute()
+        #for i in readdepartamentos.data:
+            #readprofessores = supabase.table("professores").select("*").eq("nome", i["coordenador"]).execute()
+            #readdisciplinas = supabase.table("disciplinas_lecionadas").select("*").eq("nome_professor" , i["coordenador"]).execute()
+            #response = supabase.table('departamentos').update({"id_professores" : readprofessores.data[.data.index(i)]["id_professores"], "id_disciplinas" : readdepartamentos.data[]}).eq("curso", _["curso"]).execute()
+
 
     except Exception as e:
         print(e)
