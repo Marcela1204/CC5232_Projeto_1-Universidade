@@ -60,7 +60,14 @@ Passo a passo para exceutar o projeto:
 ### Terceiro passo: 
 - Com as informações prontas, execute as queries determinadas pelo projeto na aba SQL editor.
 
-COLOCAR UM VÍDEO
+<div align="center">
+  
+**ASSISTA O VÍDEO TUTORIAL ABAIXO**
+[![Assista no YouTube](imagens/thumb.png)](https://youtu.be/hOJ7W5qYVvk)
+
+
+</div>
+<br>
 
 ## Diagramas
 
