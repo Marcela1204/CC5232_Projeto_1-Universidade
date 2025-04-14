@@ -24,8 +24,8 @@ Projeto criado por:
 > O banco de dados deverá conter as seguintes informações:   
 1. Alunos: RA, Nome, Idade, Curso, Semestre.   
 2. Professores: ID_Professores, Nome, ID_Departamento.   
-3. Departamentos: ID_Departamento, Nome, Curso, Coordenador, Chefe de Departamento.     
-4. Disciplinas Lecionadas: ID_Disciplinas, Nome do Professor, Disciplina, Curso, Ano de Início, Semestre de Início, Coordenador.   
+3. Departamentos: ID_Departamento, Curso, Coordenador, Chefe de Departamento.     
+4. Disciplinas Lecionadas: ID_Disciplinas, Nome do Professor, Disciplina, Curso, Ano de Início, Semestre de Início, Coordenador, ID_Departamento.   
 5. Histórico Escolar: ID_Histórico, RA, Disciplina, Nota, Ano, Semestre.   
 6. TCCs Apresentados: ID_TCCs, Nome do Aluno, Título, Orientador, Data de Apresentação.
 
@@ -59,8 +59,15 @@ Passo a passo para exceutar o projeto:
 
 ### Terceiro passo: 
 - Com as informações prontas, execute as queries determinadas pelo projeto na aba SQL editor.
+<br>
+<div align="center">
+  
+**ASSISTA O VÍDEO TUTORIAL ABAIXO**
+[![Assista no YouTube](imagens/thumb.png)](https://youtu.be/hOJ7W5qYVvk)
 
-COLOCAR UM VÍDEO
+
+</div>
+<br>
 
 ## Diagramas
 

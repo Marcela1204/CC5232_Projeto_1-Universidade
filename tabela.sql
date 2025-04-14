@@ -26,9 +26,7 @@ CREATE TABLE disciplinas_lecionadas (
     ano_inicio INT,
     semestre_inicio INT,
     coordenador TEXT,
-    id_departamento TEXT,
-    ra TEXT,
-    id_professores INT
+    id_departamento TEXT
 );
 
 -- Tabela de Departamentos (sem FK no início)
@@ -36,9 +34,7 @@ CREATE TABLE departamentos (
     id_departamento TEXT PRIMARY KEY,
     chefe_departamento TEXT,
     curso TEXT,
-    coordenador TEXT,
-    id_professores INT,
-    id_disciplinas INT
+    coordenador TEXT
 );
 
 -- Tabela de TCCs
@@ -70,14 +66,4 @@ ALTER TABLE professores
 
 ALTER TABLE disciplinas_lecionadas
     ADD CONSTRAINT fk_disciplinas_departamento
-    FOREIGN KEY (id_departamento) REFERENCES departamentos(id_departamento),
-    ADD CONSTRAINT fk_disciplinas_ra
-    FOREIGN KEY (ra) REFERENCES alunos(ra),
-    ADD CONSTRAINT fk_disciplinas_professores
-    FOREIGN KEY (id_professores) REFERENCES professores(id_professores);
-
-ALTER TABLE departamentos
-    ADD CONSTRAINT fk_departamentos_professores
-    FOREIGN KEY (id_professores) REFERENCES professores(id_professores),
-    ADD CONSTRAINT fk_departamentos_disciplinas
-    FOREIGN KEY (id_disciplinas) REFERENCES disciplinas_lecionadas(id_disciplinas);
+    FOREIGN KEY (id_departamento) REFERENCES departamentos(id_departamento);
