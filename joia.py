@@ -10,15 +10,16 @@ url = "https://nlfoyszzrcnadtcqhuin.supabase.co"  # Substitua com a URL do seu p
 key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5sZm95c3p6cmNuYWR0Y3FodWluIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MzExNTI1OCwiZXhwIjoyMDU4NjkxMjU4fQ.zAvSDeoZ3INAhUwSumGUCly-RTquuaYEPiPcuR4GEP4"  # api key secret
 
 
-cursos = ["Ciência da Computação", "Engenharia Elétrica", "Medicina", "Administração", "Direito", "Psicologia", "Biomedicina"]
+cursos = ["Ciência da Computação", "Engenharia Elétrica", "Medicina", "Administração", "Direito", "Psicologia", "Biomedicina","Matematica"]
 disciplinas = {
-    "Ciência da Computação": ["Algoritmos", "Estruturas de Dados", "Redes de Computadores", "Banco de Dados", "Inteligência Artificial"],
+    "Ciência da Computação": ["Algoritmos", "Estruturas de Dados", "Redes de Computadores", "Banco de Dados", "Inteligência Artificial","Sistemas de banco de dados"],
     "Engenharia Elétrica": ["Circuitos Elétricos", "Sistemas Digitais", "Eletromagnetismo", "Teoria de Controle", "Máquinas Elétricas","Algoritmos"],
     "Medicina": ["Anatomia", "Fisiologia", "Bioquímica", "Farmacologia","Microbiologia","Genética"],
     "Administração": ["Gestão de Pessoas", "Marketing", "Contabilidade", "Economia", "Administração Estratégica"],
     "Direito": ["Direito Penal", "Direito Constitucional", "Direito Civil", "Direito Empresarial", "Direito Tributário"],
     "Psicologia": ["Psicologia Geral", "Psicologia do Desenvolvimento", "Psicologia Clínica", "Psicologia Organizacional", "Psicologia Educacional"],
-    "Biomedicina": ["Genética", "Biotecnologia", "Microbiologia", "Imunologia", "Bioinformática"]
+    "Biomedicina": ["Genética", "Biotecnologia", "Microbiologia", "Imunologia", "Bioinformática"],
+    "Matematica": ["Cálculo", "Álgebra Linear", "Geometria Analítica", "Estatística", "Matemática Discreta"]
 }
 semestres = {
     "Algoritmos": 1,
@@ -54,7 +55,13 @@ semestres = {
     "Psicologia Educacional": 6,
     "Biotecnologia": 3,
     "Imunologia": 5,
-    "Bioinformática": 7
+    "Bioinformática": 7,
+    "Cálculo": 1,
+    "Álgebra Linear": 2,
+    "Geometria Analítica": 3,
+    "Estatística": 4,
+    "Matemática Discreta": 5,
+    "Sistemas de banco de dados": 6,
 }
 
 materias = []
@@ -72,7 +79,8 @@ departamentos = {
     "Administração": "DADM",
     "Direito": "DDIR",
     "Psicologia": "DPSI",
-    "Biomedicina": "DBIO"
+    "Biomedicina": "DBIO",
+    "Matematica" : "DMAT"
 }
 
 # Inicializar o cliente do Supabase
@@ -235,7 +243,7 @@ def inserir_no_supabase(dados):
 
 # Gerando dados fictícios de 15 alunos e 37 professores
 #for i in range(0,36):
-dados_ficticios = gerar_dados_ficticios(15, 37) #nao colocar valor menor q 37, preguiça de arrumar
+dados_ficticios = gerar_dados_ficticios(15, len(materias)) #nao colocar valor menor q 37, preguiça de arrumar
     #print("Gerando dados fictícios para {0} professores".format(i))
 
 # Inserir no Supabase
