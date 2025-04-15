@@ -43,9 +43,9 @@ Projeto criado por:
 10. Encontre os estudantes que cursaram "Sistemas de Banco de Dados" mas não "Inteligência Artificial".
 11. Recupere os nomes dos estudantes que cursaram disciplinas do departamento de "Matemática".
 12. Recupere os IDs dos estudantes que não estão matriculados em nenhum curso do departamento de "Ciência da Computação".
-13. Liste os cursos que foram ministrados pelos professores 'I001' e 'I002'.
-14. Liste os cursos que são ministrados pelo professor 'I001', juntamente com os títulos dos cursos.
-15. Liste os nomes dos estudantes que não cursaram nenhum curso no departamento de "Engenharia".
+13. Liste os cursos que foram ministrados pelos professores '10' e '11'.
+14. Liste os cursos que são ministrados pelo professor '10', juntamente com os títulos dos cursos.
+15. Liste os nomes dos estudantes que não cursaram nenhum curso no departamento de "DEEL"(engenharia eletrica).
 
 ## Execução do Projeto
 Passo a passo para exceutar o projeto: 
