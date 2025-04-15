@@ -45,7 +45,7 @@ Projeto criado por:
 12. Recupere os IDs dos estudantes que não estão matriculados em nenhum curso do departamento de "Ciência da Computação".
 13. Liste os cursos que foram ministrados pelos professores '10' e '11'.
 14. Liste os cursos que são ministrados pelo professor '10', juntamente com os títulos dos cursos.
-15. Liste os nomes dos estudantes que não cursaram nenhum curso no departamento de "DEEL"(engenharia eletrica).
+15. Liste os nomes dos estudantes que não cursaram nenhum curso no departamento de "DEEL" (engenharia eletrica).
 
 ## Execução do Projeto
 Passo a passo para exceutar o projeto: 
