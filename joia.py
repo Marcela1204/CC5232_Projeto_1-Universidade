@@ -241,10 +241,105 @@ def inserir_no_supabase(dados):
     except Exception as e:
         print(e)
 
+# Executar a string SQL no Supabase
+def executar_sql(sql_string):
+    try:
+        response = supabase.rpc("pg_execute_sql", {"sql": sql_string}).execute()
+        print("SQL executado com sucesso!")
+    except Exception as e:
+        print("Erro ao executar SQL:", e)
+
 # Gerando dados fictícios de 15 alunos e 37 professores
 #for i in range(0,36):
 dados_ficticios = gerar_dados_ficticios(15, len(materias)) #nao colocar valor menor q 37, preguiça de arrumar
-    #print("Gerando dados fictícios para {0} professores".format(i))
+
+# Código SQL atualizado
+sql_schema = """
+-- Tabela de Alunos
+CREATE TABLE IF NOT EXISTS alunos (
+    ra TEXT PRIMARY KEY,
+    nome TEXT,
+    idade INT,
+    curso TEXT,
+    semestre INT
+);
+
+-- Tabela de Professores
+CREATE TABLE IF NOT EXISTS professores (
+    id_professores SERIAL PRIMARY KEY,
+    nome TEXT,
+    id_departamento TEXT
+);
+
+-- Tabela de Disciplinas Lecionadas por Professores
+CREATE TABLE IF NOT EXISTS disciplinas_lecionadas (
+    id_disciplinas SERIAL PRIMARY KEY,
+    nome_professor TEXT,
+    disciplina TEXT,
+    curso TEXT,
+    ano_inicio INT,
+    semestre_inicio INT,
+    coordenador TEXT,
+    id_departamento TEXT
+);
+
+-- Tabela de Departamentos
+CREATE TABLE IF NOT EXISTS departamentos (
+    id_departamento TEXT PRIMARY KEY,
+    chefe_departamento TEXT,
+    curso TEXT,
+    coordenador TEXT
+);
+
+-- Tabela de TCCs
+CREATE TABLE IF NOT EXISTS tccs (
+    id_tccs SERIAL PRIMARY KEY,
+    nome_aluno TEXT,
+    titulo TEXT,
+    orientador TEXT,
+    data_apresentacao DATE,
+    ra TEXT,
+    FOREIGN KEY (ra) REFERENCES alunos(ra)
+);
+
+-- Tabela de Histórico Escolar
+CREATE TABLE IF NOT EXISTS historico_escolar (
+    id_historico SERIAL PRIMARY KEY,
+    disciplina TEXT,
+    nota FLOAT,
+    ano INT,
+    semestre INT,
+    ra TEXT,
+    FOREIGN KEY (ra) REFERENCES alunos(ra)
+);
+
+-- Adicionando Foreign Keys com verificação manual
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+        FROM information_schema.table_constraints
+        WHERE constraint_name = 'fk_professores_departamento'
+    ) THEN
+        ALTER TABLE professores
+        ADD CONSTRAINT fk_professores_departamento
+        FOREIGN KEY (id_departamento) REFERENCES departamentos(id_departamento);
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1
+        FROM information_schema.table_constraints
+        WHERE constraint_name = 'fk_disciplinas_departamento'
+    ) THEN
+        ALTER TABLE disciplinas_lecionadas
+        ADD CONSTRAINT fk_disciplinas_departamento
+        FOREIGN KEY (id_departamento) REFERENCES departamentos(id_departamento);
+    END IF;
+END $$;
+"""
+
+# Chamar a função com a string SQL
+executar_sql(sql_schema)
 
 # Inserir no Supabase
 inserir_no_supabase(dados_ficticios)
@@ -252,3 +347,5 @@ inserir_no_supabase(dados_ficticios)
 print("Concluido")
 fim = process_time()
 print("Tempo total de execução: {0} segundos".format((fim - inicio)*100))
+#é necessario adicionar permissões para o usuario service_role
+#exemplo do codigo: GRANT ALL PRIVILEGES ON SCHEMA public TO service_role;
