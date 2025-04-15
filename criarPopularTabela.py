@@ -245,7 +245,7 @@ def inserir_no_supabase(dados):
 def executar_sql(sql_string):
     try:
         response = supabase.rpc("pg_execute_sql", {"sql": sql_string}).execute()
-        print("SQL executado com sucesso!")
+        print("Tabela Criada!")
     except Exception as e:
         print("Erro ao executar SQL:", e)
 
