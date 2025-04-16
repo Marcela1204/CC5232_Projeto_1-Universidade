@@ -29,7 +29,7 @@ Projeto criado por:
 5. Histórico Escolar: ID_Histórico, RA, Disciplina, Nota, Ano, Semestre.   
 6. TCCs Apresentados: ID_TCCs, Nome do Aluno, Título, Orientador, Data de Apresentação.
 
-- **Queries** (Colocar as outras queries)
+- **Queries** 
 > Para demonstrar o funcionamento do banco, foram usadas as seguintes queries:   
 1. Mostre todo o histórico escolar de um aluno que teve reprovação em uma disciplina, retornando inclusive a reprovação em um semestre e a aprovação no semestre seguinte;   
 2. Mostre todos os TCCs orientados por um professor junto com os nomes dos alunos que fizeram o projeto;    
