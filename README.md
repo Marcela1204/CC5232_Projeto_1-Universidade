@@ -50,15 +50,15 @@ Projeto criado por:
 ## Execução do Projeto
 Passo a passo para exceutar o projeto: 
 
-### Primeiro passo: Criação do banco de dados
-- Através do arquivo 'tabela.sql', abra um novo snippet, cole o código e execute. Você verá o banco criado quando ir a aba table editor e selecionar o schema 'public'
+### Primeiro passo: Instalar bibliotecas 'Python', 'Faker' e 'Supabase'
+- Abra o arquivo criarPopularTabela.py no Codespace do Github e instale as três bibliotecas.
 
-### Segundo passo: Executar código para criação dos dados
-- Abra o Codespace do github, instale as bibliotecas (terminal) 'faker' e 'supabase' e execute o código em python
-  OBS: Verifique a URL e API Keys do seu banco e substitua no código nas variáveis 'url' e 'key', respectivamente, antes de executar o código.
+### Segundo passo: Verificar URL e KEY do seu banco
+- Copie e cole as chaves URL e KEY do seu banco no supabase (localização detalhada no tutorial abaixo) e substitua nas váriàveis url e key do código.
+> Dica: Crie seu próprio banco de dados para que não haja problema com permissão no ‘service role’ ao rodar o código!
 
-### Terceiro passo: 
-- Com as informações prontas, execute as queries determinadas pelo projeto na aba SQL editor.
+### Terceiro passo: Execução do código
+- Execute o código e, após aparecer a mensagem 'concluído', é possível localizar os dados no banco!
 <br>
 <div align="center">
   
