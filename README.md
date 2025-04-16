@@ -63,7 +63,8 @@ Passo a passo para exceutar o projeto:
 <div align="center">
   
 **ASSISTA O VÍDEO TUTORIAL ABAIXO**
-[![Assista no YouTube](imagens/thumb.png)](https://youtu.be/hOJ7W5qYVvk)
+[![Assista no YouTube](imagens/thumb.png)](https://youtu.be/prj2MCPkQU8)
+
 
 
 </div>
